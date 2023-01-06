@@ -16,13 +16,16 @@ class Question extends React.Component {
       props.question.correct_answer,
     ]);
   }
+  
 
   handleGuess = (answer) => {
     // set guessed to true, and set guess to the selected answer
     this.setState({ guessed: true, guess: answer });
+    console.log("answer is: ",answer)
   };
 
   render() {
+    console.log(this.handleGuess)
     return (
       <div className='card p-2 mb-4'>
         <h3 className='fw-lighter fs-5 mb-4'>{this.props.question.category}</h3>
@@ -32,14 +35,22 @@ class Question extends React.Component {
 
         <div>
           {this.answers.map((answer) => (
+            
             <AnswerButton
               key={answer}
               answer={answer}
+              handleGuess={this.handleGuess}
             />
           ))}
         </div>
 
         {/* Dynamically render correct/incorrect here! */}
+        {this.state.guessed === false ?
+        null :
+         this.state.guess === this.props.question.correct_answer ? 
+        <h1> Correct!!</h1>:
+        <h1>Incorrect! The answer is {this.props.question.correct_answer}</h1>} 
+        
       </div>
     );
   }
